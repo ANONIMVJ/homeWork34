@@ -3,41 +3,71 @@ import './Header.scss';
 import { MdClear } from 'react-icons/md';
 import { BiCart, BiSearch } from 'react-icons/bi';
 import { CgProfile } from 'react-icons/cg';
+import { FiMenu } from 'react-icons/fi';
 
 function Header() {
   const [isFragmentVisible, setIsFragmentVisible] = useState(true);
+  const [isBurgerOpen, setIsBurgerOpen] = useState(false);
+  const [showMobileSearch, setShowMobileSearch] = useState(false);
 
   const handleClearClick = () => {
     setIsFragmentVisible(false);
+  };
+
+  const toggleBurger = () => {
+    setIsBurgerOpen(!isBurgerOpen);
+    setShowMobileSearch(false); 
+  };
+
+  const toggleMobileSearch = () => {
+    setShowMobileSearch(!showMobileSearch);
+    setIsBurgerOpen(false);
   };
 
   return (
     <header>
       {isFragmentVisible && (
         <div className='header-top'>
-          <p>Sign up and get 20% off to your first order. <a href="#">Sign Up Now</a></p>
-          <MdClear className='clear-btn' onClick={handleClearClick}/>
+          <p>
+            Sign up and get 20% off to your first order. <a href="#">Sign Up Now</a>
+          </p>
+          <MdClear className='clear-btn' onClick={handleClearClick} />
         </div>
       )}
+
       <div className='container'>
         <div className='navbar-wrapper'>
+          <div className="burger-icon" onClick={toggleBurger}>
+            <FiMenu />
+          </div>
+
           <h3>SHOP.CO</h3>
-          <div className='content-ul'>
-            <ul>Shop
+
+          <div className={`content-ul ${isBurgerOpen ? 'open' : ''}`}>
+            <ul>
               <li>On Sale</li>
               <li>New Arrivals</li>
               <li>Brands</li>
             </ul>
           </div>
-          <div className='search-input'>
+
+          <div className='search-input desktop-search'>
             <BiSearch />
-            <input type="text" placeholder='Search for products...'/>
+            <input type="text" placeholder='Search for products...' />
           </div>
+
           <div className='card-and-profile-icons'>
-            <BiCart/>
+            <BiSearch className='mobile-search-icon' onClick={toggleMobileSearch} />
+            <BiCart />
             <CgProfile />
           </div>
         </div>
+
+        {showMobileSearch && (
+          <div className='mobile-search-input'>
+            <input type="text" placeholder="Search for products..." />
+          </div>
+        )}
       </div>
     </header>
   );

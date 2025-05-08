@@ -9,7 +9,6 @@ import ByDress from './ByDress';
 function Home() {
   return (
     <Fragment>
-
     <div className='hero'>
       <div className='container'>
         <h2>
